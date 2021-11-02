@@ -12,8 +12,8 @@ management:
 
 ######## Database Access Point ########
 
-#spring.datasource:
-#    url: jdbc:mysql://localhost:8889/java-jpa-test
-#    username: root
-#    password: root
-#    driverClassName: com.mysql.jdbc.Driver
+spring.datasource:
+    url: jdbc:mysql://localhost:3306/java-jpa-test
+    username: root
+    password: root
+    driverClassName: com.mysql.jdbc.Driver

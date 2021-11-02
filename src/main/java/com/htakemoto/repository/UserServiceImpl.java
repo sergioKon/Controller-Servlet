@@ -5,20 +5,21 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.htakemoto.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
+//import org.springframework.validation.annotation.Validated;
 
-import com.htakemoto.domain.User;
+
 import com.htakemoto.service.exception.NoUserExistsException;
 import com.htakemoto.service.exception.UserAlreadyExistsException;
 
 @Service
-@Validated
+//@Validated
 public class UserServiceImpl implements UserService {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<User> findAll() {
         LOGGER.debug("Retrieving the list of all users");
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findByFirstnameStartingWith(String firstname) {
         LOGGER.debug("Retrieving the list of all users with firstname start with {}", firstname);
-        return (List<User>) userRepository.findByFirstnameStartingWithIgnoreCase(firstname.toUpperCase(), new Sort(Sort.Direction.ASC,"firstname"));
+        return  userRepository.findByFirstnameStartingWithIgnoreCase(firstname.toUpperCase(), new Sort(Sort.Direction.ASC,"firstname"));
     }
 
     @Override

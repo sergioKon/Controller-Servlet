@@ -9,19 +9,28 @@
     <url>http://maven.apache.org</url>
     
     <properties>
-        <mysql.connector.version>5.1.18</mysql.connector.version>
-        <lombok.version>1.14.0</lombok.version>
+        <mysql.connector.version>8.0.27</mysql.connector.version>
+        <lombok.version>1.18.20</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
     </properties>
-    
+
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.3.RELEASE</version>
+        <version>LATEST</version>
     </parent>
 
     <dependencies>
-        
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>${lombok.version}</version>
+        </dependency>
         <!-- spring boot core -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -42,13 +51,13 @@
         </dependency>
         <!-- MySQL JDBC connector -->
         <!-- If you want to use MySQL, uncomment this dependency declation. -->
-        <!--
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
         </dependency>
-        -->
+
         <!-- PostgreSQL JDBC 4 -->
         <!-- If you want to use PostgreSQL, uncomment this dependency declaration. -->
         <!--
@@ -58,13 +67,7 @@
             <version>9.0-801.jdbc4</version>
         </dependency>
         -->
-        
-        <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
+
         
         <!-- POJO Mapper -->
         <dependency>
