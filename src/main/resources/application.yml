@@ -13,7 +13,7 @@ management:
 ######## Database Access Point ########
 
 spring.datasource:
-    url: jdbc:mysql://localhost:3306/java_jpa_test
+    url: jdbc:mysql://localhost:3306/java_jpa_test?serverTimezone=UTC
     username: root
     password: root
     driverClassName: com.mysql.cj.jdbc.Driver

@@ -1,4 +1,4 @@
-package com.htakemoto.config;
+package server.base.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +10,4 @@ public class Beans {
     public AccessLog accessLog() {
         return new AccessLog();
     }
-	
-
 }
