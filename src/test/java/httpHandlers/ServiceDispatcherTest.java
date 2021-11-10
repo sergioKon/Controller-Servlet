@@ -24,6 +24,5 @@ public class ServiceDispatcherTest {
                case MediaType.APPLICATION_JSON_VALUE -> assertEquals(clazz, JSONHandler.class);
            }
         }
-
     }
 }

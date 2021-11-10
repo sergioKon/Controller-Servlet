@@ -1,14 +1,17 @@
 
 package server.base.rest;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,9 +26,18 @@ public class MainControllerTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void getHello() throws Exception {
+    public void noContentTest()  {
 
-        ResponseEntity<String> response = restTemplate.getForEntity(new URL("http://localhost:" + port + "/anyTypeClient").toString(), String.class);
-        assertEquals("Hello Controller", response.getBody());
+        ResponseEntity<String> response = restTemplate.getForEntity("/anyTypeClient", String.class);
+        assertEquals(response.getBody(), "\""+ HttpStatus.NO_CONTENT.name()+ "\"");
+    }
+
+    @Test
+    public void withContentTest()  {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", "1");
+        ResponseEntity<String> response = restTemplate.getForEntity("/anyTypeClient", String.class,params);
+        assertEquals(response.getBody(), "\""+ HttpStatus.NO_CONTENT.name()+ "\"");
+
     }
 }
