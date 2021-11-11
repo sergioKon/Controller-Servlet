@@ -13,7 +13,6 @@ import java.nio.file.StandardOpenOption;
 @Getter
 @Log4j2
 public  class DataParser  implements  Closeable {
-
    protected String extension;
    protected String rootLocation;
    protected  String name;

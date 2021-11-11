@@ -1,5 +1,6 @@
 package server.base.config;
 
+
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -14,11 +15,12 @@ public class AccessLog {
 	
 	private static final String ACCESS_REQUEST_LOG_MESSAGE = "[{}] {}";
 	
-	@Before("within(com.htakemoto.rest.controller.*)")
+	@Before("within(server.base.rest.*)")
 	public void log() {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		String requestURL = getFullURL(request);
 		String requestMethod = request.getMethod();
+
 		log.info(ACCESS_REQUEST_LOG_MESSAGE, requestMethod, requestURL);
 	}
 	

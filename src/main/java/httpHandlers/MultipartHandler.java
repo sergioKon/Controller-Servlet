@@ -38,8 +38,10 @@ public class MultipartHandler extends HTTPAbstractHandler {
                       case  MediaType.APPLICATION_JSON_VALUE:
                           dataParser= new JSonParser();
                           break;
-                      case MediaType.APPLICATION_CBOR_VALUE:
-
+                       case MediaType.TEXT_PLAIN_VALUE:
+                           dataParser= new TextPlainParser();
+                           break;
+                       case MediaType.APPLICATION_CBOR_VALUE:
                           break;
                       case MediaType.IMAGE_GIF_VALUE:
                           dataParser= new GifParser();
@@ -49,6 +51,7 @@ public class MultipartHandler extends HTTPAbstractHandler {
                           break;
                       case MediaType.IMAGE_PNG_VALUE:
                           dataParser= new PgnParser();
+
                       default:
                           throw new IllegalStateException("Unexpected value: " + file.getContentType());
                   }
