@@ -1,4 +1,4 @@
-package converters;
+package converter.parsers;
 
 public class JSonParser extends DataParser {
     public  JSonParser(){

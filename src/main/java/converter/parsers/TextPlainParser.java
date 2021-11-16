@@ -1,4 +1,4 @@
-package converters;
+package converter.parsers;
 
 public class TextPlainParser extends DataParser {
     public  TextPlainParser(){

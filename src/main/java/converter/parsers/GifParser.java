@@ -1,4 +1,4 @@
-package converters;
+package converter.parsers;
 
 public class GifParser extends DataParser {
     public GifParser(){

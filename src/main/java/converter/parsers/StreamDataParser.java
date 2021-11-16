@@ -1,4 +1,4 @@
-package converters;
+package converter.parsers;
 
 import java.io.File;
 import java.nio.file.Path;

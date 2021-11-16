@@ -1,4 +1,4 @@
-package converters;
+package converter.parsers;
 
 public class XMLParser extends DataParser {
    public XMLParser(){

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import server.base.config.ServiceDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class CommonController {
     }
 
     @RequestMapping(value = "/anyTypeClient")
-    public HttpStatus readData( HttpServletRequest request) {
+    public HttpStatus readData( HttpServletRequest request) throws IOException {
         String contentType=  request.getContentType();
         log.debug(" content type = {}", contentType);
         if(contentType== null) {
@@ -40,7 +41,11 @@ public class CommonController {
         }
         MediaType mediaType =   MediaType.valueOf(contentType);
         HTTPAbstractHandler handler= ServiceDispatcher.getInstance().getMapServices().get(mediaType);
-        handler.proceed(request);
+        try {
+            handler.proceed(request);
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
         return HttpStatus.OK;
     }
 }

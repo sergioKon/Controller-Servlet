@@ -15,7 +15,7 @@ public class TextPlanHandler extends HTTPAbstractHandler {
     }
 
     @Override
-    protected void InitMediaType() {
+    protected void initMediaType() {
         super.mediaType= MediaType.TEXT_PLAIN;
     }
 }

@@ -1,8 +1,6 @@
 package httpHandlers;
 
-import converters.*;
-import javassist.tools.web.BadHttpRequest;
-import lombok.SneakyThrows;
+import converter.parsers.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
@@ -10,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Log4j2
@@ -17,19 +16,18 @@ import java.util.List;
 public class MultipartHandler extends HTTPAbstractHandler {
 
     @Override
-    protected void InitMediaType() {
+    protected void initMediaType() {
         super.mediaType= MediaType.MULTIPART_FORM_DATA;
     }
 
-    @SneakyThrows
     @Override
-    public void proceed(HttpServletRequest request) {
+    public void proceed(HttpServletRequest request) throws IOException {
            MultiValueMap<String, MultipartFile> clientFiles=  ((MultipartHttpServletRequest) request).getMultiFileMap();
            for(String  name : clientFiles.keySet()){
                List<MultipartFile> files=  clientFiles.get(name);
                for(MultipartFile file : files) {
                    if(file.getContentType()== null) {
-                       throw new BadHttpRequest();
+                       throw new IOException(" there is no content type ");
                    }
                    switch (file.getContentType())   {
                       case MediaType.APPLICATION_XML_VALUE:
