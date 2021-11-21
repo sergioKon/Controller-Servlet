@@ -1,6 +1,6 @@
 package server.base.config;
 
-import httpHandlers.HTTPAbstractHandler;
+import server.http.services.HTTPAbstractHandler;
 import org.springframework.http.MediaType;
 
 import java.io.File;

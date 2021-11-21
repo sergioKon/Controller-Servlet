@@ -1,4 +1,4 @@
-package httpHandlers;
+package server.http.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;

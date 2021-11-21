@@ -1,4 +1,4 @@
-package converter.parsers;
+package common.converter.parsers;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package httpHandlers;
+package server.http.services;
 
-import converter.readers.HttpStreamReader;
+import common.converter.readers.HttpStreamReader;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
@@ -21,9 +21,6 @@ public class XMLHandler extends HTTPAbstractHandler implements HttpStreamReader 
         log.debug(" xml is {}", xmlData);
     }
 
-    public  XMLHandler(){
-
-    }
 
     @Override
     protected void initMediaType() {

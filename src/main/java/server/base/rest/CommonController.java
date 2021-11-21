@@ -1,6 +1,6 @@
 package server.base.rest;
 
-import httpHandlers.HTTPAbstractHandler;
+import server.http.services.HTTPAbstractHandler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

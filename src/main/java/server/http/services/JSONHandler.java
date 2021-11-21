@@ -1,9 +1,9 @@
-package httpHandlers;
+package server.http.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import converter.readers.HttpStreamReader;
+import common.converter.readers.HttpStreamReader;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;

@@ -1,7 +1,7 @@
-package httpHandlers;
+package server.http.services;
 
 
-import converter.parsers.DataParser;
+import common.converter.parsers.DataParser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

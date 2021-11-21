@@ -1,7 +1,7 @@
-package httpHandlers;
+package server.http.services;
 
 
-import converter.parsers.StreamDataParser;
+import common.converter.parsers.StreamDataParser;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 
