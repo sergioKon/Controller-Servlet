@@ -2,15 +2,17 @@ package httpHandlers;
 
 
 import converter.parsers.DataParser;
-import lombok.extern.slf4j.Slf4j;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@Slf4j
 public abstract class HTTPAbstractHandler {
-
+     
+	protected static final Logger log = LogManager.getLogger(HTTPAbstractHandler.class);
 
     protected MediaType mediaType;
     protected  DataParser dataParser = null;

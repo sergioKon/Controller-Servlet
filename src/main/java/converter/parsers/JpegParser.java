@@ -1,7 +1,5 @@
 package converter.parsers;
 
-import lombok.extern.log4j.Log4j2;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Log4j2
+
 public class JpegParser extends DataParser {
     public JpegParser(){
         this.extension= ".jpeg";

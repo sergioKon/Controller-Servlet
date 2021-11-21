@@ -1,7 +1,9 @@
 package server.base.rest;
 
 import httpHandlers.HTTPAbstractHandler;
-import lombok.extern.log4j.Log4j2;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,9 +19,11 @@ import java.util.List;
 
 @SpringBootApplication
 @RestController
-@Log4j2
 public class CommonController {
+	
 
+	private static final Logger log = LogManager.getLogger(CommonController.class);
+	
     @RequestMapping("/")
     public String home() {
         return "Welcome to home!";
@@ -27,7 +31,8 @@ public class CommonController {
 
     @RequestMapping(value = "/anyTypeClient")
     public HttpStatus readData( HttpServletRequest request) throws IOException {
-        String contentType=  request.getContentType();
+
+    	String contentType=  request.getContentType();
         log.debug(" content type = {}", contentType);
         if(contentType== null) {
           List<String> clientParams =  Collections.list( request.getParameterNames());
@@ -40,7 +45,7 @@ public class CommonController {
           return HttpStatus.OK;
         }
         MediaType mediaType =   MediaType.valueOf(contentType);
-        HTTPAbstractHandler handler= ServiceDispatcher.getInstance().getMapServices().get(mediaType);
+        HTTPAbstractHandler handler= ServiceDispatcher.getInstance().getService(mediaType);
         try {
             handler.proceed(request);
         } catch (IOException e) {

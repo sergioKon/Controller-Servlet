@@ -1,8 +1,6 @@
 package server.base.config;
 
 import httpHandlers.HTTPAbstractHandler;
-import lombok.Getter;
-import lombok.SneakyThrows;
 import org.springframework.http.MediaType;
 
 import java.io.File;
@@ -19,19 +17,26 @@ public class ServiceDispatcher {
         private static  final ServiceDispatcher  instance = new ServiceDispatcher();
     }
 
-     @Getter
+     
      private Map<MediaType, HTTPAbstractHandler>  mapServices = new HashMap<>();
      protected String baseHandlerPackage="httpHandlers";
 
-
+ public  Map<MediaType, HTTPAbstractHandler> getMapServices() {
+	  return mapServices;
+ }
 
     public static ServiceDispatcher getInstance() {
         return Singleton.instance;
     }
 
-    @SneakyThrows
     private ServiceDispatcher()  {
-         setAllTypeHandlers();
+         try {
+			setAllTypeHandlers();
+		} catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
+				| IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
      }
 
 
@@ -61,4 +66,5 @@ public class ServiceDispatcher {
       public HTTPAbstractHandler getService(MediaType key){
          return mapServices.get(key);
       }
-}
+	}
+

@@ -1,7 +1,7 @@
 package converter.parsers;
 
 import lombok.Getter;
-import lombok.extern.log4j.Log4j2;
+
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -10,14 +10,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Getter
-@Log4j2
 public  class DataParser  implements  Closeable {
    protected String extension;
    protected String rootLocation;
    protected  String name;
    protected  int bufferSize= 8 * 1024;
    private IOException exception= null;
+   protected static final Logger log = LogManager.getLogger(DataParser.class);
+
+  
    public void  saveToFile(InputStream stream ) {
       try (OutputStream outStream = new FileOutputStream(getFullPath(),false)) {
          byte[] buffer = new byte[bufferSize];

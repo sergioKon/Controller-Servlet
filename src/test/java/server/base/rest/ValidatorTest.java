@@ -1,16 +1,48 @@
 package server.base.rest;
 
-import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 
-@Log4j2
 public class ValidatorTest{
+	private static final Logger log = LogManager.getLogger(ValidatorTest.class);
+
+    Exception e;
+    @Test
+    public void postgresTestDriver_Work() {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch(ClassNotFoundException e) {
+            this.e=e;
+
+        }
+        finally {
+            Assert.assertTrue(e==null);
+        }
+    }
+
+
+    @Test
+    public void postgresTestDriver_Fail() {
+        e=null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            log.debug("success" );
+        } catch(ClassNotFoundException e) {
+            this.e=e;
+            e.printStackTrace();
+
+        }
+        finally {
+            Assert.assertTrue(e!=null);
+        }
+    }
+
     @Test()
     public void  validatorXML_With_Attribute() throws IOException {
         String xmlString = "<person id=\"1\"> <company> 10  </company>  </person>";
