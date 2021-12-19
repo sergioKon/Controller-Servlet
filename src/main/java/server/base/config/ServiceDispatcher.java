@@ -1,8 +1,9 @@
 package server.base.config;
 
-import httpHandlers.HTTPAbstractHandler;
+import http.Handlers.custom.HTTPAbstractHandler;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 
 import java.io.File;
@@ -13,6 +14,8 @@ import java.util.Map;
 
 public class ServiceDispatcher {
 
+    @Value("${http.baseHandler.root}")
+    private String rootPackage;
     private static final Singleton instance = new Singleton();
 
     static class Singleton {
@@ -35,14 +38,24 @@ public class ServiceDispatcher {
      }
 
 
+    /***
+     * read files from base location ( class   HTTPAbstractHandler) by reflection
+     * and put them to the map for a future usage ( command pattern )
+     */
+
 
     protected void  setAllTypeHandlers() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-
-           Class<?> baseClassPath= HTTPAbstractHandler.class;
-           URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
-           String relativeLocation=  baseClassPath.getPackageName();
-           String path= rootLocation.getPath()+relativeLocation;
-
+  //move to the base package
+         String path;
+           if (rootPackage==null) {
+               Class<?> baseClassPath = HTTPAbstractHandler.class;
+               URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
+               String relativeLocation = baseClassPath.getPackageName();
+               path = rootLocation.getPath() + relativeLocation;
+           }
+           else {
+               path = rootPackage;
+           }
            File[] fileHandlers= new File(path).listFiles();
            if(fileHandlers ==null)  {
                throw  new IllegalAccessException(" folder for file is empty ");

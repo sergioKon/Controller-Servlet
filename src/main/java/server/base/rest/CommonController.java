@@ -1,6 +1,6 @@
 package server.base.rest;
 
-import httpHandlers.HTTPAbstractHandler;
+import http.Handlers.custom.HTTPAbstractHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;

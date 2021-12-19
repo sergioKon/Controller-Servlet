@@ -1,4 +1,4 @@
-package httpHandlers;
+package http.Handlers.custom;
 
 import converters.*;
 import javassist.tools.web.BadHttpRequest;

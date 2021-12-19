@@ -1,9 +1,11 @@
-package httpHandlers;
+package http.Handlers.custom;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import server.base.config.ServiceDispatcher;
 
+import java.net.URL;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,6 +26,22 @@ public class ServiceDispatcherTest {
                case MediaType.APPLICATION_JSON_VALUE -> assertEquals(clazz, JSONHandler.class);
            }
         }
+    }
 
+    @Value("${http.baseHandler.root}")
+    private String rootPackage;
+
+    @Test
+    void  getCustomHandlersLocationTest ()  {
+       String path = null;
+       if (rootPackage==null) {  //check it
+            Class<?> baseClassPath = HTTPAbstractHandler.class;
+            URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
+            String relativeLocation = baseClassPath.getPackageName();
+            path = rootLocation.getPath() + relativeLocation;
+        }
+        else {
+            path = rootPackage;
+        }
     }
 }

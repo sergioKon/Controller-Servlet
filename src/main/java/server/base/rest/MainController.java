@@ -1,5 +1,6 @@
 package server.base.rest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class MainController {
 
+    @Value("${key.name}")
+    private String abc;
     @ResponseBody
     @GetMapping("/")
     public String hello() {
-        return "Hello Controller";
+        return "Hello Controller+ abc ";
     }
 
     @PostMapping(path = "/upload")

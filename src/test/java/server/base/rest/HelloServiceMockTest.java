@@ -29,9 +29,7 @@ public class HelloServiceMockTest {
         MockMultipartFile secondFile = new MockMultipartFile("data", "other-file-name.data", "text/plain", "some other type".getBytes());
         MockMultipartFile jsonFile = new MockMultipartFile("json", "", "application/json", "{\"json\": \"someValue\"}".getBytes());
 
-
         MockMultipartFile file = new MockMultipartFile("file", "orig", null, "bar".getBytes());
-
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
                    //     .file(firstFile)

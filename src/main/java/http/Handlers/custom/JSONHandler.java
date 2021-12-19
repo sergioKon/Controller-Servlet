@@ -1,4 +1,4 @@
-package httpHandlers;
+package http.Handlers.custom;
 
 import org.springframework.http.MediaType;
 
