@@ -1,10 +1,11 @@
 package server.base.rest;
 
+import http.Handlers.custom.HTTPAbstractHandler;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -12,15 +13,55 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.File;
+import java.net.URL;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest()
 public class HelloServiceMockTest {
 
     @Autowired
-     WebApplicationContext webApplicationContext;
+    WebApplicationContext webApplicationContext;
+    String rootPackage;
+
+
+
+    @Autowired
+    Environment environment;
+
+    @Before
+    public void init() {
+        rootPackage= environment.getProperty("baseHandler.root");
+    }
+
+    @Test
+    void  readCustomHandlersLocationTest ()  {
+        String path ;
+        if (rootPackage==null) {  //check it
+            Class<?> baseClassPath = HTTPAbstractHandler.class;
+            URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
+            String relativeLocation = baseClassPath.getPackageName();
+            path = rootLocation.getPath() + relativeLocation;
+        }
+        else {
+            path = rootPackage;
+        }
+        assertNull(path);
+    }
+
+    @Test
+    void  readDefaultHandlersLocationTest ()  {
+            Class<?> baseClassPath = HTTPAbstractHandler.class;
+            URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
+            String relativeLocation = baseClassPath.getPackageName();
+            String path = rootLocation.getPath() + relativeLocation.replace(".", File.separator);
+
+            assertNotNull(path);
+    }
 
     @Test
     public void multipartRequestTestWithOtherKeys() throws Exception {
@@ -48,7 +89,7 @@ public class HelloServiceMockTest {
         MockMultipartFile originFile = new MockMultipartFile(FILE_KEY, "orig", MediaType.APPLICATION_XML_VALUE, "bar".getBytes());
 
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/anyTypeClient")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/clientData")
                          .file(firstFile)
                          .file(secondFile)
                          .file(jsonFile)

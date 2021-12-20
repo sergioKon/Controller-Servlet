@@ -1,22 +1,33 @@
 package http.Handlers.custom;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import server.base.config.ServiceDispatcher;
+import server.base.config.Dispatcher;
 
 import java.net.URL;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ServiceDispatcherTest {
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(MockitoJUnitRunner.class)
+
+public class DispatcherTest {
+
+    @Value("${http.baseHandler.root}")
+    String rootPackage;
 
     @Test
     void  getServiceListTest ()  {
 
-       ServiceDispatcher serviceDispatcher= ServiceDispatcher.getInstance();
-       Map<MediaType, HTTPAbstractHandler> handlers = serviceDispatcher.getMapServices();
+       Dispatcher dispatcher = Dispatcher.getInstance();
+       Map<MediaType, HTTPAbstractHandler> handlers = dispatcher.getMapServices();
        for (Map.Entry<MediaType, HTTPAbstractHandler> entry : handlers.entrySet()) {
            Class<?> clazz =   entry.getValue().getClass();
            switch (entry.getKey().toString()) {
@@ -28,8 +39,6 @@ public class ServiceDispatcherTest {
         }
     }
 
-    @Value("${http.baseHandler.root}")
-    private String rootPackage;
 
     @Test
     void  getCustomHandlersLocationTest ()  {
@@ -43,5 +52,6 @@ public class ServiceDispatcherTest {
         else {
             path = rootPackage;
         }
+        assertNull(path);
     }
 }

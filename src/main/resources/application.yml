@@ -9,7 +9,9 @@ management:
     port: 8081
     #contextPath: /manage
 
-
+http:
+    baseHandler:
+        root: http.handlers.custom
 ######## Database Access Point ########
 
 spring.datasource:

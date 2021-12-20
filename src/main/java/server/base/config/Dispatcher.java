@@ -3,7 +3,8 @@ package server.base.config;
 import http.Handlers.custom.HTTPAbstractHandler;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 
 import java.io.File;
@@ -12,31 +13,37 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServiceDispatcher {
+public class Dispatcher {
 
-    @Value("${http.baseHandler.root}")
-    private String rootPackage;
-    private static final Singleton instance = new Singleton();
 
-    static class Singleton {
-        private static  final ServiceDispatcher  instance = new ServiceDispatcher();
+   // @Value("${http.baseHandler.root}")
+   // @Getter @Setter
+    String rootPackage;
+    @Autowired
+    Environment env;
+
+    public void init() {
+        env.getProperty("http.baseHandler.root");
+    }
+
+    static class Service {
+        private static  final Dispatcher instance = new Dispatcher();
     }
 
      @Getter
-     private Map<MediaType, HTTPAbstractHandler>  mapServices = new HashMap<>();
+     private final Map<MediaType, HTTPAbstractHandler>  mapServices = new HashMap<>();
      protected String baseHandlerPackage="httpHandlers";
 
 
-
-    public static ServiceDispatcher getInstance() {
-        return Singleton.instance;
+    public static Dispatcher getInstance() {
+        return Service.instance;
     }
 
     @SneakyThrows
-    private ServiceDispatcher()  {
+    private Dispatcher()  {
+
          setAllTypeHandlers();
      }
-
 
     /***
      * read files from base location ( class   HTTPAbstractHandler) by reflection

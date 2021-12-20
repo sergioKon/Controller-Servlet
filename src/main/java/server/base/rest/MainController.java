@@ -13,12 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class MainController {
 
-    @Value("${key.name}")
-    private String abc;
+    @Value("${http.baseHandler.root}")
+    String rootPackage;
     @ResponseBody
-    @GetMapping("/")
+    @GetMapping("/hello")
     public String hello() {
-        return "Hello Controller+ abc ";
+        return "Hello Controller" + rootPackage;
     }
 
     @PostMapping(path = "/upload")

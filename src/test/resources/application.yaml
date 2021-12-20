@@ -1,0 +1,3 @@
+http:
+  baseHandler:
+      root: http.handlers.custom
