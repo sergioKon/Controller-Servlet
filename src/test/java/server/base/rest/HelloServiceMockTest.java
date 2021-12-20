@@ -1,11 +1,11 @@
 package server.base.rest;
 
 import http.Handlers.custom.HTTPAbstractHandler;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,7 +17,6 @@ import java.io.File;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,32 +25,22 @@ public class HelloServiceMockTest {
 
     @Autowired
     WebApplicationContext webApplicationContext;
-    String rootPackage;
-
-
 
     @Autowired
-    Environment environment;
-
-    @Before
-    public void init() {
-        rootPackage= environment.getProperty("baseHandler.root");
-    }
+    Environment env;
 
     @Test
-    void  readCustomHandlersLocationTest ()  {
-        String path ;
-        if (rootPackage==null) {  //check it
+    void  readConfigLocationTest ()  {
+        String path = env.getProperty("http.baseHandler.root");
+        if (path==null) {
             Class<?> baseClassPath = HTTPAbstractHandler.class;
             URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
             String relativeLocation = baseClassPath.getPackageName();
             path = rootLocation.getPath() + relativeLocation;
         }
-        else {
-            path = rootPackage;
-        }
-        assertNull(path);
+        assertNotNull(path);
     }
+
 
     @Test
     void  readDefaultHandlersLocationTest ()  {
@@ -96,7 +85,7 @@ public class HelloServiceMockTest {
                         .file(originFile)
                         .param("some-random", "4"))
                 .andExpect(status().is(200))
-                .andExpect(content().string("success"));
+                .andExpect(content().string("\"" + HttpStatus.OK.name()+"\""));
 
     }
     @Test
@@ -104,12 +93,12 @@ public class HelloServiceMockTest {
         MockMultipartFile originFile = new MockMultipartFile("binary", "orig", MediaType.APPLICATION_OCTET_STREAM_VALUE, "bar".getBytes());
 
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        mockMvc.perform(MockMvcRequestBuilders.post("/anyTypeClient")
-                        .accept(MediaType.APPLICATION_OCTET_STREAM)
+        mockMvc.perform(MockMvcRequestBuilders.post("/clientData")
+                   //     .accept(MediaType.APPLICATION_OCTET_STREAM)
                         .content("bar".getBytes())
                         .contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
-                .andExpect(status().is(200))
-               .andExpect(content().string("success"));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().string("\"" + HttpStatus.OK.name()+"\""));
     }
  }
 

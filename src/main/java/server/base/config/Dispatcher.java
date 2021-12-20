@@ -16,32 +16,21 @@ import java.util.Map;
 public class Dispatcher {
 
 
-   // @Value("${http.baseHandler.root}")
-   // @Getter @Setter
-    String rootPackage;
     @Autowired
-    Environment env;
-
-    public void init() {
-        env.getProperty("http.baseHandler.root");
+    Environment environment;
+    static class Singleton {
+        private static  final Dispatcher  instance = new Dispatcher();
     }
-
-    static class Service {
-        private static  final Dispatcher instance = new Dispatcher();
-    }
-
+  
      @Getter
      private final Map<MediaType, HTTPAbstractHandler>  mapServices = new HashMap<>();
-     protected String baseHandlerPackage="httpHandlers";
-
 
     public static Dispatcher getInstance() {
-        return Service.instance;
+        return Singleton.instance;
     }
 
     @SneakyThrows
     private Dispatcher()  {
-
          setAllTypeHandlers();
      }
 
@@ -52,24 +41,26 @@ public class Dispatcher {
 
 
     protected void  setAllTypeHandlers() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-  //move to the base package
+   //baseHandlerPackage
          String path;
-           if (rootPackage==null) {
-               Class<?> baseClassPath = HTTPAbstractHandler.class;
-               URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
-               String relativeLocation = baseClassPath.getPackageName();
-               path = rootLocation.getPath() + relativeLocation;
-           }
-           else {
-               path = rootPackage;
-           }
+      //   String rootPackage= environment.getProperty("http.baseHandler.root");
+         // String rootPackage= "http.baseHandler.root";
+
+           Class<?> baseClassPath = HTTPAbstractHandler.class;
+           URL rootLocation = baseClassPath.getProtectionDomain().getCodeSource().getLocation();
+           String relativePackage = baseClassPath.getPackageName();
+           String relativeLocation = relativePackage.replace('.','/');
+           path = rootLocation.getPath() + relativeLocation;
+
            File[] fileHandlers= new File(path).listFiles();
            if(fileHandlers ==null)  {
                throw  new IllegalAccessException(" folder for file is empty ");
            }
-           for (File f: fileHandlers) {
+           for (File file: fileHandlers) {
+               int iEnd = file.getName().indexOf(".class");
+               Class<?> clazz = Class.forName(relativePackage + '.' + file.getName().substring(0, iEnd));
 
-               Class<?> clazz = Class.forName(baseHandlerPackage + '.' + f.getName().substring(0, f.getName().length() - 6));
+             //  Class<?> clazz = Class.forName(path + '.' + file.getName().substring(0, file.getName().length() - 6));
                if(clazz.getName().contains("Abstract")) {
                    continue;
                }

@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URL;
@@ -17,15 +18,15 @@ public class MainControllerTest {
 
     // bind the above RANDOM_PORT
     @LocalServerPort
-    private int port;
+    int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    TestRestTemplate restTemplate;
 
     @Test
     public void getHello() throws Exception {
 
-        ResponseEntity<String> response = restTemplate.getForEntity(new URL("http://localhost:" + port + "/anyTypeClient").toString(), String.class);
-        assertEquals("Hello Controller", response.getBody());
+        ResponseEntity<String> response = restTemplate.getForEntity(new URL("http://localhost:" + port + "/clientData").toString(), String.class);
+        assertEquals("\""+HttpStatus.NO_CONTENT.name()+"\"", response.getBody());
     }
 }

@@ -1,7 +1,6 @@
 package http.Handlers.custom;
 
 import converters.*;
-import javassist.tools.web.BadHttpRequest;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
@@ -29,7 +28,7 @@ public class MultipartHandler extends HTTPAbstractHandler {
                List<MultipartFile> files=  clientFiles.get(name);
                for(MultipartFile file : files) {
                    if(file.getContentType()== null) {
-                       throw new BadHttpRequest();
+                       throw new RuntimeException();
                    }
                    switch (file.getContentType())   {
                       case MediaType.APPLICATION_XML_VALUE:

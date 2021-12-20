@@ -1,10 +1,7 @@
 package server.base.rest;
 
 import http.Handlers.custom.HTTPAbstractHandler;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,9 +18,7 @@ import java.util.List;
 @RestController
 @Log4j2
 public class CommonController {
-    @Value("${http.baseHandler.root}")
-    @Getter @Setter
-    String rootPackage;
+
     @RequestMapping("/")
     public String home() {
         return "Welcome to home!";

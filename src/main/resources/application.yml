@@ -10,8 +10,8 @@ management:
     #contextPath: /manage
 
 http:
-    baseHandler:
-        root: http.handlers.custom
+  baseHandler:
+    root: http.handlers.custom
 ######## Database Access Point ########
 
 spring.datasource:
